@@ -9,11 +9,15 @@ negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "ala
 "help", "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed", 
 "distressing", "concerning", "horrible", "horribly", "questionable"]
 negative_string = "I am concerned that this project is horrible, awful, and broken."
+punctuation = [",", "!", "?", ".", "%", "/", "(", ")"]
 
 def censor_phrase(phrase,text):
   censor_word =''
   for i in range(len(phrase)):
-    censor_word +='#'
+    if phrase[i] == " ":
+      censor_word += " "
+    else:
+      censor_word +='#'
   return text.replace(phrase,censor_word)
 
 def censor_word(word):
@@ -30,15 +34,14 @@ def is_censored_word(word):
 
 def censor_phrases_in_list(phrase_list,text):
   # Used in Question 2 of the project
-  temp_phrase = []
-  temp_phrase.append(text)
   for phrase in phrase_list:
-    # remove phrase in phrase_list
-    temp_phrase.append(censor_phrase(phrase,temp_phrase[-1]))
-  return temp_phrase[-1]
+    text = censor_phrase(phrase,text)
+  return text 
 
 def clean_word(word):
-  return word.lower().replace(',','').replace('.','').replace('?','')
+  for punc in punctuation:
+    word = word.strip(punc)
+  return word
 
 def is_negative_word(word):
   for i in range(len(negative_words)):
@@ -50,6 +53,9 @@ def censor_negative_and_proprietary_words(negative_string):
   # censor any occurance of a word from the “negative words” list 
   # after any “negative” word has occurred twice,
   # as well as censoring everything from the proprietary_terms list 
+  # this better than the solution given because it maintains the paragraphs
+
+  # loop but use sub strings to step through the string so as to maintain paragraphs
   clean_string = []
   clean_string.append(negative_string)
   string_ctr = 0
@@ -58,10 +64,11 @@ def censor_negative_and_proprietary_words(negative_string):
   negative_words_ctr = 0
   
   for word in proprietary_terms:
-    clean_string.append(censor_phrase(word,clean_string[-1]))
+    #clean_string.append(censor_phrase(word,clean_string[-1]))
+    negative_string = censor_phrase(word,negative_string)
 
-  negative_string_as_list = clean_string[-1].split()
-  new_negative_string = clean_string[-1]
+  negative_string_as_list = negative_string.split()#clean_string[-1].split()
+  new_negative_string = negative_string #clean_string[-1]
 
   for word in negative_string_as_list:
     if curr_start_index == 0: # first word in string
@@ -144,11 +151,11 @@ def censor_before_after(censored_string) :
 
 # print("Email 2 Before Censor\n")
 # print(email_two+'\n')
-# print(censor_phrases_in_list(proprietary_terms,email_two))
-# print(censor_negative_and_proprietary_words(negative_string))
+#print(censor_phrases_in_list(proprietary_terms,email_two))
+print(censor_negative_and_proprietary_words(negative_string))
 #print(censor_negative_and_proprietary_words(email_three))
-#print(censor_before_after(censor_negative_and_proprietary_words(negative_string)))
-print(censor_before_after(censor_negative_and_proprietary_words(email_four)))
+print(censor_before_after(censor_negative_and_proprietary_words(negative_string)))
+#print(censor_before_after(censor_negative_and_proprietary_words(email_four)))
 
 
 
