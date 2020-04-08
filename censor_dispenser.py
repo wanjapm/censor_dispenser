@@ -29,6 +29,7 @@ def is_censored_word(word):
 		return False
 
 def censor_phrases_in_list(phrase_list,text):
+  # Used in Question 2 of the project
   temp_phrase = []
   temp_phrase.append(text)
   for phrase in phrase_list:
@@ -42,7 +43,6 @@ def clean_word(word):
 def is_negative_word(word):
   for i in range(len(negative_words)):
       if clean_word(word).find(negative_words[i]) > -1:
-        print (word)
         return True
   return False
 
@@ -63,14 +63,10 @@ def censor_negative_and_proprietary_words(negative_string):
   start_index = 0
   curr_start_index = 0
   negative_words_ctr = 0
-  # negative_string_as_list = negative_string.split()
-
-  #print ("String to be censored:\n"+negative_string + "\n")
   
   for word in proprietary_terms:
     clean_string.append(censor_phrase(word,clean_string[-1]))
 
-  #negative_string_as_list = negative_string.split()
   negative_string_as_list = clean_string[-1].split()
   new_negative_string = clean_string[-1]
 
@@ -82,7 +78,7 @@ def censor_negative_and_proprietary_words(negative_string):
         negative_words_ctr+=1
       # if word is in proprietary list , then censor otherwise add the word
       if is_proprietary_term(word):
-         clean_string.append(new_negative_string[:start_index] + censor_phrase(word,word))
+         #clean_string.append(new_negative_string[:start_index] + censor_phrase(word,word))
       else:
       # this is a precaution just in case string starts with white spaces
         clean_string.append(new_negative_string[:start_index] + word)
@@ -109,7 +105,6 @@ def censor_before_after(censored_string) :
   start_index = 0
   curr_start_index = 0
   censored_string_as_list=[]
-  #censored_string = "##### I am concerned that this project is horrible, #####, and ######."
   censored_string_as_list = censored_string.split()
   censored_indices=[]
 
@@ -141,16 +136,14 @@ def censor_before_after(censored_string) :
       #clean_string.append(censored_string[:start_index + len(word)])
         clean_string.append(censored_string[:start_index] + word)
       curr_start_index = start_index + len(word)
-      # print(clean_string[-1])
     else:
       start_index  = censored_string[curr_start_index:].find(word)
       if is_index_of_censor_word(string_ctr):
         clean_string.append(clean_string[-1] + censored_string[curr_start_index:curr_start_index+start_index] + censor_word(word))
       else:	
-      #clean_string.append(clean_string[-1] + censored_string[curr_start_index:curr_start_index+start_index + len(word)])
         clean_string.append(clean_string[-1] + censored_string[curr_start_index:curr_start_index+start_index] + word)
       curr_start_index+=start_index + len(word)
-      # print(clean_string[-1])
+     
     string_ctr +=1
   #print (clean_string[-1])
   return clean_string[-1]
