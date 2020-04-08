@@ -64,11 +64,10 @@ def censor_negative_and_proprietary_words(negative_string):
   negative_words_ctr = 0
   
   for word in proprietary_terms:
-    #clean_string.append(censor_phrase(word,clean_string[-1]))
     negative_string = censor_phrase(word,negative_string)
 
-  negative_string_as_list = negative_string.split()#clean_string[-1].split()
-  new_negative_string = negative_string #clean_string[-1]
+  negative_string_as_list = negative_string.split()
+  new_negative_string = negative_string 
 
   for word in negative_string_as_list:
     if curr_start_index == 0: # first word in string
