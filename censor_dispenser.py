@@ -46,13 +46,6 @@ def is_negative_word(word):
         return True
   return False
 
-def is_proprietary_term(word):
-  for i in range(len(proprietary_terms)):
-    if clean_word(word).find(proprietary_terms[i]) > -1:
-      print (word)
-      return True
-  return False
-
 def censor_negative_and_proprietary_words(negative_string):
   # censor any occurance of a word from the “negative words” list 
   # after any “negative” word has occurred twice,
@@ -76,12 +69,9 @@ def censor_negative_and_proprietary_words(negative_string):
       # if word is in negative words list , add negative counter
       if is_negative_word(word):
         negative_words_ctr+=1
-      # if word is in proprietary list , then censor otherwise add the word
-      if is_proprietary_term(word):
-         #clean_string.append(new_negative_string[:start_index] + censor_phrase(word,word))
-      else:
+      
       # this is a precaution just in case string starts with white spaces
-        clean_string.append(new_negative_string[:start_index] + word)
+      clean_string.append(new_negative_string[:start_index] + word)
       curr_start_index = start_index + len(word)
       # print(clean_string[-1])
     else:
@@ -90,8 +80,6 @@ def censor_negative_and_proprietary_words(negative_string):
         negative_words_ctr+=1
         clean_string.append(clean_string[-1] + new_negative_string[curr_start_index:curr_start_index+start_index] + word)
       elif is_negative_word(word):
-        clean_string.append(clean_string[-1] + new_negative_string[curr_start_index:curr_start_index+start_index] + censor_phrase(word,word))
-      elif is_proprietary_term(word):
         clean_string.append(clean_string[-1] + new_negative_string[curr_start_index:curr_start_index+start_index] + censor_phrase(word,word))
       else:
         clean_string.append(clean_string[-1] + new_negative_string[curr_start_index:curr_start_index+start_index] + word)
