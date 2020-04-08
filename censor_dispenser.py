@@ -94,9 +94,9 @@ def censor_before_after(censored_string) :
   curr_start_index = 0
   censored_string_as_list=[]
   censored_string_as_list = censored_string.split()
-  censored_indices=[]
+  censored_indices=[] # will contain indices of censored words 
 
-  def is_index_of_censor_word(index,):
+  def is_index_of_censor_word(index):
     for indx in censored_indices:
       if indx == index:
         return True
@@ -110,6 +110,7 @@ def censor_before_after(censored_string) :
       elif string_ctr+1 < len(censored_string_as_list) :
         censored_indices.append(string_ctr-1)
         censored_indices.append(string_ctr+1)
+        # *** why does this not work? censored_indices + [string_ctr-1,string_ctr+1] ***
     string_ctr+=1
 
 
@@ -136,7 +137,7 @@ def censor_before_after(censored_string) :
   #print (clean_string[-1])
   return clean_string[-1]
   
-# Test area
+# Testing area
 #print("Email One Before Censor of 'learning algorithms' \n")
 # print(email_one)
 # print(censor_phrase( 'learning algorithms',email_one))
@@ -148,7 +149,6 @@ def censor_before_after(censored_string) :
 #print(censor_negative_and_proprietary_words(email_three))
 #print(censor_before_after(censor_negative_and_proprietary_words(negative_string)))
 print(censor_before_after(censor_negative_and_proprietary_words(email_four)))
-# print(censor_phrase("patience","patience"))
 
 
 
